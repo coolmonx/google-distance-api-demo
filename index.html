@@ -1,0 +1,74 @@
+<!doctyp html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Test Distance</title>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+</head>
+<body>
+ละติจูด:<input id="lat" name="latitude" class="MapLat" value="" type="text" placeholder="Latitude" style="width: 161px;" disabled>
+ลองติจูด:<input id="long" name="longitude" class="MapLon" value="" type="text" placeholder="Longitude" style="width: 161px;" disabled>
+&nbsp;&nbsp;<button type="button" onclick="popup('origin.html', '', 640, 480);">เลือกต้นทาง</button>
+<br/><br/>
+ละติจูด:<input id="lat2" name="latitude" class="MapLat" value="" type="text" placeholder="Latitude" style="width: 161px;" disabled>
+ลองติจูด:<input id="long2" name="longitude" class="MapLon" value="" type="text" placeholder="Longitude" style="width: 161px;" disabled>
+&nbsp;&nbsp;<button type="button" onclick="popup('destination.html', '', 640, 480);">เลือกปลายทาง</button>
+<br/><br/>
+<button id="distBtn" type="button" onclick="caldis();">คำนวนระยะทาง</button>
+<br/><br/>
+<span id="displayDistance"></span>
+
+<script>
+
+function popup(url, title, width, height) {
+  var left = (screen.width/2) - (width/2);
+  var top = (screen.height/2) - (height/2);
+  var options = '';
+
+  options += 'toolbar=no,location=no,directories=no,status=no';
+  options += ',menubar=no,scrollbars=no,resizable=no,copyhistory=no';
+
+  options += ',width='  + width;
+  options += ',height=' + height;
+  options += ',top='    + top;
+  options += ',left='   + left;
+
+  return window.open(url, title, options);
+}
+
+function setLocation(lat,long) {
+
+  document.getElementById('lat').value = lat;
+  document.getElementById('long').value = long;
+
+}
+
+function setLocation2(lat,long) {
+
+  document.getElementById('lat2').value = lat;
+  document.getElementById('long2').value = long;
+
+}
+
+$.ajaxSetup({
+    async: false,
+    dataType: 'jsonp'
+});
+
+function caldis() {
+  var lat = document.getElementById('lat').value;
+  var long = document.getElementById('long').value;  
+  var lat2 = document.getElementById('lat2').value;
+  var long2 = document.getElementById('long2').value;
+
+  var key = "YOUR GOOGLE DISTANCE API KEY";
+  var origin = lat+","+long;
+  var destination = lat2+","+long2;  
+  var url='https://maps.googleapis.com/maps/api/distancematrix/json?origins='+origin+'&destinations='+destination+'&key='+key;
+
+  window.open(url, 'Google Map Distance API');
+}
+
+</script>
+</body>
+</html>    
